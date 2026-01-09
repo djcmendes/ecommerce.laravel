@@ -114,6 +114,46 @@ docker-compose logs -f
 
 ---
 
+## Troubleshooting & Useful Commands
+
+Here is a list of commands that are helpful for debugging and managing the Docker environment:
+
+### Verify Server Response
+Check if the server is reachable and correct headers are being sent (useful if you haven't set up the hosts file yet or need to debug routing):
+```bash
+curl -I -H "Host: ecommerce.laravel.com" http://localhost
+```
+*Windows Powershell:*
+```powershell
+curl.exe -I -H "Host: ecommerce.laravel.com" http://localhost
+```
+
+### View Application Logs
+See the last 20 lines of the Laravel application log file:
+```bash
+docker-compose exec app tail -n 20 storage/logs/laravel.log
+```
+
+### View Container Logs
+See the logs from the `app` container (PHP-FPM, stdout/stderr):
+```bash
+docker-compose logs --tail=20 app
+```
+
+### Fix Permissions
+If you encounter permission errors writing to storage or cache:
+```bash
+docker-compose exec app chmod -R 777 storage bootstrap/cache
+```
+
+### Generate Application Key
+If you see an error about missing app key:
+```bash
+docker-compose exec app php artisan key:generate
+```
+
+---
+
 ## How it Works?
 
 With this example, we wanted to show you how to structure a bigger application. In this case - an E-Commerce project.
