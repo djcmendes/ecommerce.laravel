@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Auth\Http\Controllers\LoginController;
 use Modules\Auth\Http\Controllers\RegisterController;
+use Modules\Auth\Http\Controllers\SocialAuthController;
 use Modules\Auth\Http\Controllers\ForgotPasswordController;
 
 /*
@@ -28,4 +29,8 @@ Route::middleware('web')->group(function () {
 
     Route::get('password/reset', [ForgotPasswordController::class, 'show'])->name('password.request');
     Route::post('password/email', [ForgotPasswordController::class, 'sendResetLink'])->name('password.email');
+
+    // Socialite Routes
+    Route::get('auth/{provider}/redirect', [SocialAuthController::class, 'redirectToProvider'])->name('social.redirect');
+    Route::get('auth/{provider}/callback', [SocialAuthController::class, 'handleProviderCallback'])->name('social.callback');
 });

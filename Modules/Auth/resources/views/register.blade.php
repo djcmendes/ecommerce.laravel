@@ -3,26 +3,11 @@
 @section('content')
     <div class="container">
         <h1>Register</h1>
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
-            <div>
-                <label>Name</label>
-                <input type="text" name="name" required>
-            </div>
-            <div>
-                <label>Email</label>
-                <input type="email" name="email" required>
-            </div>
-            <div>
-                <label>Password</label>
-                <input type="password" name="password" required>
-            </div>
-            <div>
-                <label>Confirm Password</label>
-                <input type="password" name="password_confirmation" required>
-            </div>
-            <button type="submit">Register</button>
-        </form>
+        <div style="margin-top: 20px;">
+            <a href="{{ route('social.redirect', 'github') }}"
+                style="display: inline-block; padding: 10px 20px; background: #333; color: white; text-decoration: none; border-radius: 5px;">Register
+                with GitHub</a>
+        </div>
         <a href="{{ route('login') }}">Back to Login</a>
     </div>
 @endsection
