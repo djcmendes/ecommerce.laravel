@@ -14,9 +14,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('cart/{cart}', [CartController::class, 'destroy']); // Remove from cart
 
     // Wishlist Management
-    Route::get('wishlist', [WishlistController::class, 'index']); // View wishlist
-    Route::post('wishlist/{wishlist}', [WishlistController::class, 'store']); // Add to wishlist
-    Route::delete('wishlist/{wishlist}', [WishlistController::class, 'destroy']); // Remove from wishlist
+    // Route::get('wishlist', [WishlistController::class, 'index']); // View wishlist
+    // Route::post('wishlist/{wishlist}', [WishlistController::class, 'store']); // Add to wishlist
+    // Route::delete('wishlist/{wishlist}', [WishlistController::class, 'destroy']); // Remove from wishlist
 
     // Orders
     Route::get('orders', [OrderController::class, 'index']); // List user orders
