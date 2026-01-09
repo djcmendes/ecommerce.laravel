@@ -58,6 +58,62 @@ Follow these steps to set up the project locally:
 
 ---
 
+## Docker Setup (Alternative Installation)
+
+If you prefer to run the project using Docker, follow these steps:
+
+### Build and Start Containers
+Run the following command in your terminal:
+```bash
+docker-compose up -d --build
+```
+
+### Xdebug Support
+Xdebug is configured on port 9003 with idekey `PHPSTORM`.
+If you enabled it after initial build, make sure to rebuild:
+```bash
+docker-compose down
+docker-compose up -d --build
+```
+
+### Install Dependencies
+Once the containers are up, install PHP dependencies:
+```bash
+docker-compose exec app composer install
+```
+
+### Run Migrations
+Set up the database:
+```bash
+docker-compose exec app php artisan migrate
+```
+
+### Access the Application
+Open your browser and navigate to:
+[http://ecommerce.laravel.com](http://ecommerce.laravel.com)
+
+**IMPORTANT**: You must add the following line to your hosts file:
+- Windows: `C:\Windows\System32\drivers\etc\hosts`
+- Linux/Mac: `/etc/hosts`
+
+```
+127.0.0.1 ecommerce.laravel.com
+```
+
+### Verification
+Check running containers:
+```bash
+docker-compose ps
+```
+You should see `laravel-app`, `laravel-webserver`, and `laravel-db` running.
+
+Check logs if needed:
+```bash
+docker-compose logs -f
+```
+
+---
+
 ## How it Works?
 
 With this example, we wanted to show you how to structure a bigger application. In this case - an E-Commerce project.

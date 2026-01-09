@@ -1,7 +1,5 @@
 <?php
 
-exit('aqui estou eu');
-
 use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));

@@ -1,0 +1,56 @@
+services:
+    app:
+        build:
+            context: .
+            dockerfile: .docker/php/Dockerfile
+        container_name: laravel-app
+        restart: unless-stopped
+        working_dir: /var/www
+        volumes:
+            - ./:/var/www
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        environment:
+            PHP_IDE_CONFIG: "serverName=ecommerce.laravel"
+            DEBUG_CONFIG: "remote_host=host.docker.internal"
+        networks:
+            - laravel
+
+    webserver:
+        image: nginx:alpine
+        container_name: laravel-webserver
+        restart: unless-stopped
+        ports:
+            - "80:80"
+        volumes:
+            - ./:/var/www
+            - ./.docker/nginx/conf.d:/etc/nginx/conf.d
+        networks:
+            - laravel
+        depends_on:
+            - app
+
+    db:
+        image: mysql:8.0
+        container_name: laravel-db
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE:-laravel}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+            MYSQL_PASSWORD: ${DB_PASSWORD:-root}
+            MYSQL_USER: ${DB_USERNAME:-laravel}
+            SERVICE_TAGS: dev
+            SERVICE_NAME: mysql
+        volumes:
+            - dbdata:/var/lib/mysql
+            - ./.docker/mysql/my.cnf:/etc/mysql/my.cnf
+        networks:
+            - laravel
+
+networks:
+    laravel:
+        driver: bridge
+
+volumes:
+    dbdata:
+        driver: local
